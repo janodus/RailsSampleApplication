@@ -19,11 +19,12 @@ module SessionsHelper
 
   # Returns the user corresponding to the remember token cookie.
   def current_user
+    # This is an 'if assignment' special syntax.
     if (user_id = session[:user_id])
       @current_user ||= User.find_by(id: user_id)
     elsif (user_id = cookies.signed[:user_id])
       user = User.find_by(id: user_id)
-      if user && user.authenticated?(cookies[:remember_token])
+      if user && user.authenticated?(:remember, cookies[:remember_token])
         log_in user
         @current_user = user
       end
@@ -57,6 +58,6 @@ module SessionsHelper
   # Stores the URL user is trying to access.
   def store_location
     session[:forwarding_url] = request.original_url if request.get?
-  end 
+  end
 
 end

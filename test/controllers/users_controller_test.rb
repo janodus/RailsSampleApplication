@@ -49,6 +49,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       delete user_path(@user)
     end
     assert_redirected_to root_url
-  end  
+  end
 
 end
